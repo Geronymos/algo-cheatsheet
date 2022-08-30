@@ -1,0 +1,405 @@
+\documentclass[11pt, a4paper, twoside]{article}
+\usepackage[a4paper, margin=1cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{multicol}
+\usepackage[noend]{algorithm2e}
+\usepackage[utf8]{inputenc}
+
+\setlength{\algomargin}{0pt}
+
+\begin{document}
+\section{Laufzeit}
+\hspace*{-.5cm}
+\begin{tabular}{ l l l l }
+    Notations & Asymptotischer Vergleich & Formale Definition & Grenzen \\
+    $f(n) \in \omega(g(n))$& 
+    $f(n)$ wächst schneller als $g(n)$ & 
+    $\forall c \exists n_0 \forall n > n_0 f(n) > c \cdot g(n)$ &
+    $$$\lim\sup\limits_{n \rightarrow \infty}\frac{f}{g} = \infty$$$ \\
+
+    $f(n) \in \Omega(g(n))$ &
+    $f(n)$ wächst min. so schnell wie $g(n)$ & 
+    $\exists c \exists n_0 \forall n > n_0 c \cdot f(n) \leq g(n)$ &
+    $$$0 < \liminf\limits_{n \rightarrow \infty}\frac{f}{g} \leq \infty$$$ \\
+
+    \( f(n) \in \Theta(g(n)) \) &
+    $f(n)$ und $g(n)$ wachsen gleich schnell & 
+    $f(n) \in \mathcal{O}(g(n)) \wedge f(n) \in \Omega(g(n))$ &
+    $$$0 < \lim\limits_{n \rightarrow \infty}\frac{f}{g} < \infty$$$ \\
+
+    \( f(n) \in \mathcal{O}(g(n)) \) &
+    $f(n)$ wächst max. so schnell wie $g(n)$ & 
+    $\exists c \exists n_0 \forall n > n_0 f(n) \leq c \cdot g(n)$ &
+    $$$0 \leq \limsup\limits_{n \rightarrow \infty}\frac{f}{g} < \infty$$$ \\
+
+    \( f(n) \in o(g(n)) \) &
+    $f(n)$ wächst langsamer als $g(n)$ & 
+    $\forall c \exists n_0 \forall n > n_0 c \cdot f(n) < g(n)$ &
+    $$$\lim\limits_{n \rightarrow \infty} \frac{f}{g} = \infty$$$ \\
+
+\end{tabular}
+
+\subsection{Vergleich}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+    $1$ & $\log^*n$ & $\log n$ & $\log^2n$ & $\sqrt[3]{n}$ & 
+    $\sqrt{n}$ & $n$ & $n^2$ & $n^3$ & $n^{\log n}$ & 
+    $2^{\sqrt{n}}$ & $2^n$ & $3^n$ & $4^n$ & $n!$ & $2^{n^2}$
+\end{tabular}
+
+\begin{multicols}{3}
+
+    \subsubsection*{Transitivität}
+
+    $f_1(n) \in \mathcal{O}(f_2(n)) \wedge f_2(n) \in\mathcal{O}(f_3(n))$ \\
+    $\Rightarrow f_1(n) \in \mathcal{O}(f_3(n))$
+
+    \subsubsection*{Summen}
+
+    $f_1(n) \in \mathcal{O}f_3(n)) \wedge f_2(n) \in \mathcal{O}(f_3(n))$ \\
+    $\Rightarrow f_1(n) + f_2(n) \in \mathcal{O}(f_3(n))$
+
+    \subsubsection*{Produkte}
+
+    $f_1(n) \in \mathcal{O}(g_1(n)) \wedge f_2(n) \in \mathcal{O}(g_2(n))$ \\
+    $\Rightarrow f_1(n) \cdot f_2(n) \in \mathcal{O}(g_1(n) \cdot g_2(n))$
+
+
+    \columnbreak
+
+    \subsection{Master-Theorem}
+
+    Sei $T(n) = a \cdot T(\frac{n}{b}) + f(n)$ mit $f(n) \in \Theta(n^c)$ und i
+    $T(1) \in \Theta(1)$. Dann gilt
+    $
+    T(n) \in \begin{cases}
+        \Theta(n^c) &\text{wenn } a < b^c, \\
+        \Theta(n^c \log n) &\text{wenn } a = b^c, \\
+        \Theta(n^{\log_b(a)}) &\text{wenn } a > b^c.
+    \end{cases}
+    $ 
+
+    \subsubsection{Monome}
+
+    \begin{itemize}
+        \item $a \leq b \Rightarrow n^a \in \mathcal{O}(n^b)$
+        \item $n^a \in \Theta(n^b) \Leftrightarrow a = b$
+        \item $\sum_{v \in V}deg(v) = \Theta(m)$
+        \item $\forall n \in \mathbb{N}: \sum^n_{k=0}k = \frac{n(n+1)}{2}$
+        \item $
+            \sum^b_{i=a} \in \begin{cases}
+                \Theta(c^a) &\text{wenn } c < 1, \\
+                \Theta(c^b) &\text{wenn } c > 1, \\
+                \Theta(b-a) &\text{wenn } c = 1.
+            \end{cases}
+            $
+        \item $\log(ab) = \log(a) + \log(b)$
+        \item $\log(\frac{a}{b}) = \log(a) - \log(b)$
+        \item $a^{\log_a(b)} = b$
+        \item $a^x = e^{ln(a) \cdot x}$
+        \item $\log(a^b) = b \cdot \log(a)$
+        \item $\log_b(n) = \frac{\log_a(n)}{\log_a(b)}$
+    \end{itemize}
+
+    %\subsubsection{Konstante Faktoren}
+    %
+    %$a \cdot f(n) \in \Theta(f(n))$
+
+
+\end{multicols}
+
+\begin{minipage}{0.7\textwidth} 
+
+    \section{Sortieren}
+
+    \begin{tabular}[t]{c || c | c | c | c}
+        Algorithmus & best case & average & worst & Stabilität \\
+        \hline
+        Insertion-Sort & 
+        $\mathcal{O}(n)$ & $\mathcal{O}(n^2)$ & $\mathcal{O}(n^2)$ & stabil\\
+        Bubble-Sort & 
+        $\mathcal{O}(n)$ & $\mathcal{O}(n^2)$ & $\mathcal{O}(n^2)$ & stabil\\
+        Merge-Sort & 
+        $\mathcal{O}(n\log n)$ & $\mathcal{O}(n\log n)$ & $\mathcal{O}(n\log n)$ & stabil\\
+        Quick-Sort & 
+        $\mathcal{O}(n \log n)$ & $\mathcal{O}(n\log n)$ & $\mathcal{O}(n\log n)$ & i.A.  nicht stabil\\
+        Heap-Sort & 
+        $\mathcal{O}(n\log n)$ & $\mathcal{O}(n\log n)$ & $\mathcal{O}(n\log n)$ & nicht stabil\\
+        \hline
+        Bucket-Sort & 
+        $\Theta(n+m)$ & $\Theta(n+m)$ & $\Theta(n+m)$ & 
+        stabil $e \in [0, m)$\\
+        Radix-Sort & 
+        $\Theta(c \cdot n)$ & $\Theta(c\cdot n)$ & $\Theta(c\cdot n)$ & 
+        stabil $e \in [0, n^c$\\
+    \end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\textwidth} 
+    \subsection{Heaps}
+
+    \begin{tabular}[t]{c || c}
+        Bin.-Heap & Laufzeit \\
+        \hline
+        push(x) & $\mathcal{O}(\log n)$ \\
+        popMin() & $\mathcal{O}(\log n)$ \\
+        devPrio(x, x') & $\mathcal{O}(\log n)$ \\
+        build([$\mathbb{N}$; n]) & $\mathcal{O}(n)$
+    \end{tabular}
+
+    \begin{itemize}
+        \item linkes Kind: $2v + 1$
+        \item rechts Kind: $2v + 2$
+        \item Elternknoten: $ \lfloor \frac{v - 1}{2} \rfloor $
+    \end{itemize}
+
+\end{minipage}
+
+
+\begin{multicols}{2}
+
+    \section{Datenstrukturen}
+
+    \subsection{Listen}
+
+    \begin{tabular}{c || c | c | c || c}
+        Operation & DLL & SLL & Array & Erklärung(*) \\
+        \hline
+        first & 1 & 1 & 1 & \\
+        last & 1 & 1 & 1 & \\ 
+        insert & 1 & 1* & n & nur insertAfter \\
+        remove & 1 & 1* & n & nur removeAfter \\
+        pushBack & 1 & 1 & 1* & amortisiert \\
+        pushFront & 1 & 1 & n & \\
+        popBack & 1 & n & 1* & amortisiert \\
+        popFront & 1 & 1 & n & \\
+        concat & 1 & 1 & n & \\
+        splice & 1 & 1 & n \\
+        findNext & n & n & n 
+
+    \end{tabular}
+
+    \subsection{Hash-Tabelle}
+    $\mathcal{H}$ heißt \textbf{universell}, wenn für ein zufälliges gewähltes
+    $h \in \mathcal{H}$ gilt: $U \rightarrow \{0, ..., m-1\}$ \\
+    $\forall k, l \in U, k \neq l: Pr[h(k) = h(l) = \frac{1}{m}$ \\
+    $h_{a,b}(k) = ((a\cdot k + b) \mod p) \mod m$
+
+    \subsection{Graphen}
+
+    \begin{tabular}{c || c}
+        Algorithmus & Laufzeit \\
+        \hline
+        BFS/DFS & $\Theta(n+m)$\\
+        topoSort & $\Theta(n)$\\
+        Kruskal & $\Theta(m \log n)$\\
+        Prim & $\Theta((n+m)\log n)$ \\
+        Dijksta & $\Theta((n + m) \log n)$\\
+        Bellmann-Ford & $\Theta(nm)$\\
+        Floyd-Warshall & $\Theta(n^3)$ \\
+    \end{tabular}
+
+\end{multicols}
+
+\newpage
+
+\begin{multicols}{2}
+
+    \subsubsection{DFS}
+
+    \begin{tabular}{c || c | c}
+        Kante & DFS & FIN \\
+        \hline
+        Vorkante & klein $\rightarrow$ groß & groß $\rightarrow$ klein \\
+        Rückkante & groß $\rightarrow$ klein & klein $\rightarrow$ groß \\
+        Querkante & groß $\rightarrow$ klein & groß $\rightarrow$ klein \\
+        Baumkante & klein $\rightarrow$ groß & groß $\rightarrow$ klein \\
+    \end{tabular}
+    \subsection{Bäume}
+    \subsubsection{Heap}
+    Priorität eines Knotens $\geq (\leq)$ Priorität der Kinder.
+    \textbf{BubbleUp}, \textbf{SinkDown}. \textbf{Build} mit \textbf{sinkDown} 
+    beginnend mit letztem Knoten der vorletzten Ebene weiter nach oben.
+    \textbf{decPrio} entweder updaten, Eigenschaft wiederherstellen; löschen,
+    mit neuer Prio einfügen oder Lazy Evaluation.
+
+    \subsubsection{(ab)-Baum}
+    Balanciert. \textbf{find}, \textbf{insert}, \textbf{remove}y in 
+    $\Theta(log n)$. Zu viele Kinder: \textbf{rebalance} / \textbf{fuse}. 
+    Zu viele Kinder: \textbf{split}. 
+
+    Linker Teilbaum $\leq$ Schlüssel k $<$ rechter Teilbaum
+
+    Unendlich-Trick, für Invarianten.  
+
+    \subsection{Union-Find}
+    Rang: höhe des Baums, damit ist die Höhe h mind. $2^h$ Knoten, h $\in
+    \mathcal{O}(\log n)$. 
+    Union hängt niedrigen Baum an höherrängigen Baum. Pfadkompression hängt alle
+    Knoten bei einem \textbf{find} an die Wurzel. 
+
+
+    \columnbreak
+    \section{Amortisierte Analyse}
+
+    \subsection{Aggregation}
+    Summiere die Kosten für alle Operationen. Teile Gesamtkkosten durch Anzahl
+    Operationen. 
+
+    \subsection{Charging}
+    Verteile Kosen-Tokens von teuren zu günstigen Operationen (Charging). Zeige:
+    jede Operation hat am Ende nur wenige Tokens. 
+
+    \subsection{Konto}
+    Günstige Operationen bezahlen mehr als sie tatsächlich kosten (ins Konto
+    einzahlen). Teure Operationen bezahlen tatsächliche Kosten zum Teil mit
+    Guthaben aus dem Konto. \textbf{Beachte: Konto darf nie negativ sein!}
+
+    \subsection{Potential (Umgekehrte Kontomethode)}
+    Definiere Kontostand abhängig vom Zustand der Datenstruktur
+    (Potentialfunktion)
+
+    amortisierten Kosten = tatsächliche Kosten 
+    $+ \Phi(S_\text{nach}) -\Phi(S_\text{vor})$
+
+\end{multicols}
+
+\section{Pseudocode}
+\scriptsize
+\begin{minipage}{.25\linewidth}
+    \begin{algorithm}[H]
+        DFS(Graph G, Node v) \\
+        mark v \\
+        dfs[v] := dfsCounter++ \\
+        low[v] := dfs[v] \\
+        \For{u $\in$ N(v)}{
+            \eIf{not marked u}{
+                dist[u] := dist[v] + 1 \\
+                par[u] := v \\
+                DFS(G, u) \\
+                low[v] := min(low[v], low[u]) \\
+            }{low[v] := min(low[v], dfs[u])}
+        }
+        fin[v] := fin++ \\
+    \end{algorithm}
+\end{minipage}
+\begin{minipage}{.25\linewidth}
+    \begin{algorithm}[H]
+        topoSort(Graph G) \\
+        fin := [$\infty$; n] \\
+        curr := 0 \\
+        \For{Node v in V}{
+            \If{v is colored}{DFS(G,v)}
+        }
+        return V sorted by decreasing fin \\
+    \end{algorithm}
+\end{minipage}
+\begin{minipage}{.25\linewidth}
+    \begin{algorithm}[H]
+        Kruskal(Graph G) \\
+        U := Union-Find(G.v) \\
+        PriorityQueue Q := empty \\
+        \For{Edge e in E}{Q.push(e, len(e))}
+        \While{Q $\neq \emptyset$}{
+            e := Q.popMin() \\
+            \If{U.find(v) $\neq$ U.find(u)}{
+                L.add(e) \\
+                U.union(v, u) \\
+            }
+        }
+    \end{algorithm}
+\end{minipage}
+\begin{minipage}{.25\linewidth}
+    \begin{algorithm}[H]
+        Prim(Graph G) \\
+        Priority Queue Q := empty \\
+        p := [0; n] \\
+        \For{Node v in V}{
+            Q.push(v, $\infty$) \\
+        }
+        \While{Q $\neq \emptyset$}{
+            u := Q.popMin() \\
+            \For{Node v in N(u)}{
+                \If{v $\in$ Q $\wedge$ (len(u, v) $<$ Q.prio(v))}{
+                    p[v] = u \\
+                    Q.decPrio(v, len(u, v) \\
+                }
+            }
+        }
+    \end{algorithm}
+\end{minipage}
+\begin{minipage}{.25\linewidth}
+    \begin{algorithm}[H]
+        BFS(Graph G, Start s, Goal z) \\
+        Queue Q := empty queue \\
+        Q.push(s) \\
+        s.layer = 0 \\
+        \While{Q $\neq \emptyset$}{
+            u := Q.pop() \\
+            \For{Node v in N(u)}{
+                \If{v.layer = $-\infty$}{
+                    Q.push(v) \\
+                    v.layer = u.layer + 1
+                }
+                \If{v = z}{
+                    return z.layer
+                }
+            }
+        }
+    \end{algorithm}
+\end{minipage}
+\begin{minipage}{.25\linewidth}
+    \begin{algorithm}[H]
+        Dijkstra(Graph G, Node s) \\
+        d := [$\infty$; n] \\
+        d[s] := 0 \\
+        PriorityQueue Q := empty priority queue \\
+        \For{Node v in V}{
+            Q.push(v, d[v])
+        }
+        \While{Q $\neq \emptyset$}{
+            u := Q.popMin() \\
+            \For{Node v in N(u)}{
+                \If{d[v] $>$ d[u] + len(u, v)}{
+                    d[v] := d[u] + len(u, v) \\
+                    Q.decPrio(v, d[v]) \\
+                }
+            }
+        }
+    \end{algorithm} 
+\end{minipage}
+\begin{minipage}{.25\linewidth}
+    \begin{algorithm}[H]
+        BellManFord(Graph G, Node s) \\
+        d := [$\infty$, n] \\
+        d[s] := 0 \\
+        \For{n-1 iterations}{
+            \For{(u, v) $\in$ E}{
+                \If{d[v] $>$ d[u] + len(u, v)}{
+                    d[v] := d[u] + len(u, v)
+                }
+            }
+        }
+        \For{(u, v) $\in$ E}{
+            \If{d[v] $>$ d[u] + len(u, v)}{
+                return negative cycle
+            }
+        }
+        return d
+    \end{algorithm}
+\end{minipage}
+\begin{minipage}{.25\linewidth}
+    \begin{algorithm}[H]
+        FloydWarshall(Graph G) \\
+        D := [$\infty$, n $\times$ n] \\
+        \For{(u, v) $\in$ E}{D[u][v] := len(u, v)}
+        \For{v $\in$ V}{D[v][v] := 0}
+        \For{i $\in 1,...,n$}{
+            \For{(u,v) $\in V \times V$}{
+                D[u][v] := min(D[u][v], D[u][$v_i$] + D[$v_i$][v]) \\
+            }
+        }
+        return D
+    \end{algorithm}
+\end{minipage}
+\end{document}
