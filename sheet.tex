@@ -143,7 +143,7 @@
         \hline
         push(x) & $\mathcal{O}(\log n)$ \\
         popMin() & $\mathcal{O}(\log n)$ \\
-        devPrio(x, x') & $\mathcal{O}(\log n)$ \\
+        decPrio(x, x') & $\mathcal{O}(\log n)$ \\
         build([$\mathbb{N}$; n]) & $\mathcal{O}(n)$
     \end{tabular}
 
@@ -182,7 +182,7 @@
     \subsection{Hash-Tabelle}
     $\mathcal{H}$ heißt \textbf{universell}, wenn für ein zufälliges gewähltes
     $h \in \mathcal{H}$ gilt: $U \rightarrow \{0, ..., m-1\}$ \\
-    $\forall k, l \in U, k \neq l: Pr[h(k) = h(l) = \frac{1}{m}$ \\
+    $\forall k, l \in U, k \neq l: Pr[h(k) = h(l)] = \frac{1}{m}$ \\
     $h_{a,b}(k) = ((a\cdot k + b) \mod p) \mod m$
 
     \subsection{Graphen}
@@ -224,8 +224,8 @@
     mit neuer Prio einfügen oder Lazy Evaluation.
 
     \subsubsection{(ab)-Baum}
-    Balanciert. \textbf{find}, \textbf{insert}, \textbf{remove}y in 
-    $\Theta(log n)$. Zu viele Kinder: \textbf{rebalance} / \textbf{fuse}. 
+    Balanciert. \textbf{find}, \textbf{insert}, \textbf{remove} in 
+    $\Theta(log n)$. Zu wenig Kinder: \textbf{rebalance} / \textbf{fuse}. 
     Zu viele Kinder: \textbf{split}. 
 
     Linker Teilbaum $\leq$ Schlüssel k $<$ rechter Teilbaum
@@ -247,7 +247,7 @@
     Operationen. 
 
     \subsection{Charging}
-    Verteile Kosen-Tokens von teuren zu günstigen Operationen (Charging). Zeige:
+    Verteile Kosten-Tokens von teuren zu günstigen Operationen (Charging). Zeige:
     jede Operation hat am Ende nur wenige Tokens. 
 
     \subsection{Konto}
