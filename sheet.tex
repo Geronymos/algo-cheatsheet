@@ -1,14 +1,38 @@
 \documentclass[11pt, a4paper, twoside]{article}
-\usepackage[a4paper, margin=1cm]{geometry}
+\usepackage[
+    a4paper,
+    headsep=5mm,
+    footskip=0mm,
+    top=12mm,
+    left=10mm,
+    right=10mm,
+    bottom=10mm
+]{geometry}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{multicol}
 \usepackage[noend]{algorithm2e}
 \usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
 
 \setlength{\algomargin}{0pt}
 
 \begin{document}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{Algorithmen 1}
+\fancyhead[R]{Gero Beckmann - \url{https://github.com/Geronymos/algo-cheatsheet}}
+\fancyfoot{}
+\fancyfoot[R]{\thepage}
 \section{Laufzeit}
 \hspace*{-.5cm}
 \begin{tabular}{ l l l l }
